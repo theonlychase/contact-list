@@ -1,1 +1,1 @@
-# Vue 3 + Typescript + Vite + Tailwind Starter Template
+# Contact List, built with Vue3, Typescript & Tailwind
