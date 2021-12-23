@@ -1,27 +1,40 @@
 <script setup lang="ts">
-  import { PropType } from 'vue';
+  import { inject, PropType } from 'vue';
+  import { initialContactState, setModalType } from '@/components/composables';
   import { Contact } from './types';
-  import { WcIcon } from 'wc-ui-library';
+
   const props = defineProps({
-    contact: {
+    index: {
+      type: Number,
+      default: -1,
+    },
+    item: {
       type: Object as PropType<Contact>,
-      default: () => ({
-        firstName: '',
-        lastName: '',
-        email: '',
-      }),
+      default: (): Contact => initialContactState,
     },
   });
+
+  const contact = inject('contact');
+  const currentIndex = inject('currentIndex');
+
+  const modifyContact = (type) => {
+    setModalType(type);
+    currentIndex.value = props.index;
+
+    if (type === 'Update') {
+      Object.assign(contact, props.item);
+    }
+  };
 </script>
 
 <template>
-  <li class="block hover:bg-gray-50 cursor-pointer">
+  <li class="block hover:bg-gray-50">
     <div class="px-4 py-4 flex items-center sm:px-6">
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="truncate">
           <div class="flex text-sm">
             <p class="font-medium text-indigo-600 truncate">
-              {{ contact.firstName }} {{ contact.lastName }}
+              {{ item.firstName }} {{ item.lastName }}
             </p>
           </div>
           <div class="mt-2 flex">
@@ -29,27 +42,24 @@
               <wc-icon name="mail" color="blue400" size="xSmall" />
 
               <div class="ml-2">
-                {{ contact.email }}
+                {{ item.email }}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="ml-5 flex-shrink-0">
-        <!-- Heroicon name: solid/chevron-right -->
-        <svg
-          class="h-5 w-5 text-gray-400"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
+      <div class="ml-5 flex">
+        <wc-button size="small" class="mr-2" @click="modifyContact('Update')">
+          Update
+        </wc-button>
+
+        <wc-button
+          class="!bg-red-500 !border-red-500 hover:!bg-red-600"
+          size="small"
+          @click="modifyContact('Remove')"
         >
-          <path
-            fill-rule="evenodd"
-            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-            clip-rule="evenodd"
-          />
-        </svg>
+          Remove
+        </wc-button>
       </div>
     </div>
   </li>

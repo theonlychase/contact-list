@@ -1,16 +1,5 @@
-<script setup lang="ts">
-  import ContactList from './components/ContactList.vue';
-</script>
-
 <template>
-  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <div class="w-full max-w-3xl mx-auto mt-16 sm:px-6 lg:px-8 flex-1">
     <contact-list />
   </div>
 </template>
-
-<style>
-  #app {
-    text-align: center;
-    margin-top: 60px;
-  }
-</style>

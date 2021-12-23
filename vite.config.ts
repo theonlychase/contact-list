@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import Components from 'unplugin-vue-components/vite';
 import { resolve } from 'path';
 
 export default defineConfig({
@@ -8,5 +9,15 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    Components({
+      resolvers: [
+        (name) => {
+          if (name.startsWith('Wc'))
+            return { importName: name, path: 'wc-ui-library' };
+        },
+      ],
+    }),
+  ],
 });
