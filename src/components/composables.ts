@@ -1,5 +1,6 @@
 import { Contact } from '@/components/types';
-import { reactive, ref, Ref } from 'vue';
+import { clearValidation } from './validations';
+import { reactive, ref, Ref, watch } from 'vue';
 
 const initialContactState: Contact = {
   firstName: '',
@@ -61,6 +62,16 @@ const setInitialContactState = (): void => {
   Object.assign(contact, initialContactState);
   showModal.value = false;
 };
+
+watch(
+  () => showModal.value,
+  (value) => {
+    if (!value && modalType.value === 'Update') {
+      setInitialContactState();
+    }
+    clearValidation();
+  },
+);
 
 export {
   contact,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { inject, PropType } from 'vue';
+  import { inject, PropType, Ref } from 'vue';
   import { initialContactState, setModalType } from '@/components/composables';
   import { Contact } from './types';
 
@@ -14,8 +14,8 @@
     },
   });
 
-  const contact = inject('contact');
-  const currentIndex = inject('currentIndex');
+  const contact = inject('contact') as Contact;
+  const currentIndex = inject('currentIndex') as Ref<number>;
 
   const modifyContact = (type) => {
     setModalType(type);
