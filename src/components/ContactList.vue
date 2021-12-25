@@ -21,7 +21,12 @@
 
 <template>
   <div class="flex justify-between items-end gap-x-4 mb-6">
-    <wc-button @click="setModalType('Add')"> Add Contact </wc-button>
+    <wc-button @click="setModalType('Add')">
+      <template #icon-left>
+        <wc-icon name="plus" size="xSmall" />
+      </template>
+      Add Contact
+    </wc-button>
 
     <wc-listbox
       v-model:value="sortBy"

@@ -59,18 +59,19 @@
         <wc-button
           size="small"
           class="mr-2"
-          variation="secondary"
+          circle
           @click="modifyContact('Update')"
         >
-          Update
+          <wc-icon name="pencil" size="xSmall" />
         </wc-button>
 
         <wc-button
           class="!bg-red-500 !border-red-500 hover:!bg-red-600"
+          circle
           size="small"
           @click="modifyContact('Remove')"
         >
-          Remove
+          <wc-icon name="minus" size="xSmall" color="white" />
         </wc-button>
       </div>
     </div>

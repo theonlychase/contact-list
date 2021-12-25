@@ -34,7 +34,7 @@
     "unplugin-vue-components": "^0.17.9",
     "vite": "^2.7.6",
     "vue-tsc": "^0.30.0",
-    "wc-ui-library": "^0.0.26"
+    "wc-ui-library": "^0.0.30"
   },
   "lint-staged": {
     "*.{vue,js,ts}": "eslint --fix"
