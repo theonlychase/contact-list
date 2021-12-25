@@ -8,6 +8,8 @@
     modalType,
     setModalType,
     showModal,
+    sortBy,
+    sortOptions,
   } from './composables';
 
   provide('currentIndex', currentIndex);
@@ -18,7 +20,20 @@
 </script>
 
 <template>
-  <div class="bg-white shadow overflow-hidden sm:rounded-md mb-6">
+  <div class="flex justify-between items-end gap-x-4 mb-6">
+    <wc-button @click="setModalType('Add')"> Add Contact </wc-button>
+
+    <wc-listbox
+      v-model:value="sortBy"
+      class="min-w-[10rem]"
+      label="Sort By"
+      :options="sortOptions"
+    />
+  </div>
+
+  <div
+    class="bg-white shadow shadow-blue-900/50 overflow-hidden sm:rounded-md mb-6"
+  >
     <ul role="list" class="divide-y divide-gray-200">
       <contact-list-item
         v-for="(listItem, itemIndex) in contactList"
@@ -28,10 +43,6 @@
       />
     </ul>
   </div>
-
-  <wc-button class="mx-auto" @click="setModalType('Add')">
-    Add Contact
-  </wc-button>
 
   <contact-modal />
 </template>

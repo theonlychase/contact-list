@@ -1,4 +1,4 @@
-import { Contact } from '@/components/types';
+import { Contact, SortOptions } from '@/components/types';
 import { clearValidation } from './validations';
 import { reactive, ref, Ref, watch } from 'vue';
 
@@ -19,17 +19,32 @@ const contactList: Contact[] = reactive([
     lastName: 'James',
     email: 'johnjames@joe.com',
   },
+  {
+    firstName: 'Adam',
+    lastName: 'Doe',
+    email: 'adam@doe.com',
+  },
 ]);
 
 const contact: Contact = reactive({ ...initialContactState });
-
+const sortOptions: SortOptions = ['First Name', 'Last Name', 'Email'];
+const sortBy = ref('First Name');
 const modalType: Ref<string> = ref('');
 const showModal: Ref<boolean> = ref(false);
 const currentIndex: Ref<number> = ref(-1);
 
+const modalEvents = (value: Contact): void => {
+  return modalType.value === 'Add'
+    ? addContact(value)
+    : modalType.value === 'Update'
+    ? updateContact(value)
+    : removeContact();
+};
+
 const addContact = (value: Contact): void => {
   if (Object.values(value).every((val) => val.length > 0)) {
     contactList.push({ ...value });
+    selected(sortBy.value);
     setInitialContactState();
   }
 };
@@ -45,14 +60,6 @@ const updateContact = (value: Contact): void => {
   setInitialContactState();
 };
 
-const modalEvents = (value: Contact): void => {
-  return modalType.value === 'Add'
-    ? addContact(value)
-    : modalType.value === 'Update'
-    ? updateContact(value)
-    : removeContact();
-};
-
 const setModalType = (type): void => {
   modalType.value = type;
   showModal.value = true;
@@ -63,6 +70,25 @@ const setInitialContactState = (): void => {
   showModal.value = false;
 };
 
+const sort = (contactKey) => {
+  contactList.sort((a, b) => {
+    const firstKey = a[contactKey].toLowerCase();
+    const secondKey = b[contactKey].toLowerCase();
+
+    return firstKey > secondKey ? 1 : firstKey < secondKey ? -1 : 0;
+  });
+};
+
+const selected = (value) => {
+  if (value.includes('First')) {
+    sort('firstName');
+  } else if (value.includes('Last')) {
+    sort('lastName');
+  } else {
+    sort('email');
+  }
+};
+
 watch(
   () => showModal.value,
   (value) => {
@@ -71,6 +97,13 @@ watch(
     }
     clearValidation();
   },
+);
+watch(
+  () => sortBy.value,
+  (value) => {
+    selected(value);
+  },
+  { immediate: true },
 );
 
 export {
@@ -83,4 +116,6 @@ export {
   setInitialContactState,
   setModalType,
   showModal,
+  sortBy,
+  sortOptions,
 };

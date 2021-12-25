@@ -4,7 +4,9 @@ export interface Contact {
   email: string;
 }
 
-export interface ErrorValidation {
+export type SortOptions = Array<'First Name' | 'Last Name' | 'Email'>;
+
+interface ErrorValidation {
   error: string;
 }
 
@@ -13,5 +15,3 @@ export interface Validation {
   lastName: ErrorValidation;
   email: ErrorValidation;
 }
-
-
