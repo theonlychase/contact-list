@@ -66,9 +66,9 @@
         </wc-button>
 
         <wc-button
-          class="!bg-red-500 !border-red-500 hover:!bg-red-600"
           circle
           size="small"
+          variation="error"
           @click="modifyContact('Remove')"
         >
           <wc-icon name="minus" size="xSmall" color="white" />

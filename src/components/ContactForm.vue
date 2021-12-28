@@ -61,16 +61,12 @@
   <div class="mt-5 flex">
     <wc-button
       class="mr-2"
-      :class="{
-        '!bg-red-500 !border-red-500 hover:!bg-red-600': modalType === 'Remove',
-      }"
+      :variation="modalType === 'Remove' ? 'error' : 'primary'"
       @click="submit"
     >
       {{ modalType }}
     </wc-button>
 
-    <wc-button variation="secondary" @click="showModal = false">
-      Cancel
-    </wc-button>
+    <wc-button variation="white" @click="showModal = false"> Cancel </wc-button>
   </div>
 </template>
